@@ -118,6 +118,7 @@ export var COMMAND = {
 	exportPlaylist: 1035,
 	toggleAppPanel: 1036,
 	exportFile: 1037,
+	showSaveWarning: 1038,
 };
 
 export var PLAYTYPE = {

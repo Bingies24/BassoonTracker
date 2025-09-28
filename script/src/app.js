@@ -35,6 +35,7 @@ var App = (function(){
             
             switch (command){
                 case COMMAND.newFile:
+                    Tracker.stop();
                     Tracker.new();
                     break;
                 case COMMAND.openFile:
@@ -191,6 +192,35 @@ var App = (function(){
                     break;
                 default:
                     EventBus.trigger(command);
+                    break;
+                case COMMAND.showSaveWarning:
+                    var dialog = ModalDialog();
+                    dialog.setProperties({
+                        width: UI.mainPanel.width,
+                        height: UI.mainPanel.height,
+                        top: 0,
+                        left: 0,
+                        yes: true,
+                        no: true
+                    });
+
+                    dialog.onClick = function(touchData){
+                        var elm = dialog.getElementAtPoint(touchData.x,touchData.y);
+                        if (elm && elm.name){
+                            UI.setStatus("");
+                            if (elm.name === "yesbutton"){
+                                Tracker.stop();
+                                dialog.close();
+                                Tracker.new();
+                            }else{
+                                dialog.close();
+                            }
+                        }
+                    };
+
+                    dialog.setText("////UNSAVED PROGRESS//Are you sure you want to leave the current song without saving?");
+
+                    UI.setModalElement(dialog);
                     break;
             }
         });

@@ -9,7 +9,7 @@ let modalDialog = function(initialProperties){
     var me = UIElement();
     var text = "";
     var inputBox;
-    var properties = ["left","top","width","height","name","ok","cancel","input"];
+    var properties = ["left","top","width","height","name","ok","cancel","yes","no","input"];
 
     me.setProperties = function(p){
 
@@ -28,11 +28,21 @@ let modalDialog = function(initialProperties){
         background.setSize(panelWidth,panelHeight);
         background.setPosition(Math.floor((me.width-panelWidth)/2),Math.floor((me.height-panelHeight)/2));
 
-        if (me.cancel){
-            okButton.setPosition(background.left + Math.floor(background.width/2) - 110,background.top + background.height - 40);
-            cancelButton.setPosition(background.left + Math.floor(background.width/2) + 10,background.top + background.height - 40);
-        }else{
-            okButton.setPosition(background.left + Math.floor(background.width/2) - 50,background.top + background.height - 40);
+        if (me.ok){
+            if (me.cancel){
+                okButton.setPosition(background.left + Math.floor(background.width/2) - 110,background.top + background.height - 40);
+                cancelButton.setPosition(background.left + Math.floor(background.width/2) + 10,background.top + background.height - 40);
+            }else{
+                okButton.setPosition(background.left + Math.floor(background.width/2) - 50,background.top + background.height - 40);
+            }
+        }
+        if (me.yes){
+            if (me.no){
+                yesButton.setPosition(background.left + Math.floor(background.width/2) - 110,background.top + background.height - 40);
+                noButton.setPosition(background.left + Math.floor(background.width/2) + 10,background.top + background.height - 40);
+            }else{
+                yesButton.setPosition(background.left + Math.floor(background.width/2) - 50,background.top + background.height - 40);
+            }
         }
 
         if (me.input){
@@ -89,6 +99,23 @@ let modalDialog = function(initialProperties){
     });
     me.addChild(cancelButton);
 
+    var yesButton = Assets.generate("buttonLight");
+    yesButton.setProperties({
+        name: "yesbutton",
+        label: "Yes",
+        width: 100,
+        height: 28
+    });
+    me.addChild(yesButton);
+
+    var noButton = Assets.generate("buttonLight");
+    noButton.setProperties({
+        name: "nobutton",
+        label: "No",
+        width: 100,
+        height: 28
+    });
+    me.addChild(noButton);
 
     // will be overriden if other functionality needed
     me.onKeyDown = function(keyCode){
@@ -134,6 +161,8 @@ let modalDialog = function(initialProperties){
 
             if (me.ok) okButton.render();
             if (me.cancel) cancelButton.render();
+            if (me.yes) yesButton.render();
+            if (me.no) noButton.render();
 
             if (inputBox){
                 inputBox.render();
