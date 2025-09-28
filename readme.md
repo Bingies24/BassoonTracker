@@ -66,8 +66,7 @@ There are still some very specific [Protracker 1 and 2 playback quirks](http://w
    - Panning Slides
    - PingPong Loops are unrolled to normal loops (There's no difference in sound but if you save your XM file, your samples will have changed.)
    - When writing XM files, patterns are not packed so the resulting files will probably be a little bigger than when saved with the real FastTracker 2.
- - Safari doesn't support WebAudio StereoPanners so songs will be played in mono on Safari.
- - Safari and Firefox don't support the [Web Midi Api](https://caniuse.com/midi) so no midi on those browsers.
+ - Safari and Firefox for Android don't support the [Web Midi Api](https://caniuse.com/midi) so no midi on those browsers.
 
 **How to Run**  
 BassoonTracker is a web application that runs in your browser.   
