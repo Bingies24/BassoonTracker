@@ -62,6 +62,18 @@ var Host = function(){
 		return new Date().getTime();
 	};
 
+	me.getBassoonVersionNumber = function(){
+		if (typeof window.bassoonVersionNumber === "string" && window.bassoonVersionNumber.indexOf(".")>0) return bassoonVersionNumber;
+		if (hostBridge && hostBridge.getBassoonVersionNumber) 	return hostBridge.getBassoonVersionNumber();
+		return "dev";
+	};
+
+	me.getBassoonBuildNumber = function(){
+		if (typeof bassoonBuildNumber !== "undefined") return bassoonBuildNumber;
+		if (hostBridge && hostBridge.getBassoonBuildNumber) return hostBridge.getBassoonBuildNumber();
+		return new Date().getTime();
+	};
+
 	me.signalReady = function(){
 		if (hostBridge && hostBridge.signalReady) hostBridge.signalReady();
 	};
