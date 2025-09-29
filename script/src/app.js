@@ -128,7 +128,7 @@ var App = (function(){
                     window.open("https://www.stef.be/bassoontracker/docs/");
                     break;
                 case COMMAND.showGithub:
-                    window.open("https://github.com/steffest/bassoontracker");
+                    window.open("https://github.com/Bingies24/BassoonTracker/tree/saxomposer");
                     break;
 				case COMMAND.showStats:
 				    var stats = document.getElementById("MrDStats");
