@@ -33,3 +33,12 @@ config.js
 LICENSE_spark
 README_spark.md
 spark.exe
+
+# Samples
+/data/samples/st-xx/*
+!/data/samples/st-xx/*.json
+!/data/samples/st-xx/st-01/
+!/data/samples/st-xx/st-02/
+!/data/samples/st-xx/st-03/
+!/data/samples/st-xx/st-04/
+!/data/samples/st-xx/st-05/
