@@ -36,6 +36,22 @@ var Editor = (function(){
 
 	var saveWarningStatus = 0;
 
+	me.updateWindowTitle = function(){
+		var songTitle = Tracker.getSong().title;
+		var version = Host.getVersionNumber();
+		var saveWarningNotification = "";
+
+		if (saveWarningStatus == 1){
+			saveWarningNotification = "*"
+		}
+
+		if (songTitle != ""){
+			document.title = "Saxomposer " + version + " - " + songTitle + saveWarningNotification;
+		}else{
+			document.title = "Saxomposer " + version + " - unnamed" + saveWarningNotification;
+		}
+	}
+
 	me.getStepsPerTrack = function(){
 		return Tracker.inFTMode() ? 8 : 6;
 	};
@@ -112,6 +128,7 @@ var Editor = (function(){
 		editAction.data[0].to = note.duplicate();
 		StateManager.registerEdit(editAction);
 		me.setSaveWarningStatus(1);
+		me.updateWindowTitle();
 		
 		Tracker.getSong().patterns[currentPattern][currentPatternPos][currentTrack] = note;
 		EventBus.trigger(EVENT.patternChange,currentPattern);
@@ -160,6 +177,7 @@ var Editor = (function(){
 		editAction.data[0].to = note.duplicate();
 		StateManager.registerEdit(editAction);
 		me.setSaveWarningStatus(1);
+		me.updateWindowTitle();
 		
 		Tracker.getSong().patterns[currentPattern][currentPatternPos][currentTrack] = note;
 		EventBus.trigger(EVENT.patternChange,currentPattern);
@@ -179,6 +197,7 @@ var Editor = (function(){
 		}
 		StateManager.registerEdit(editAction);
 		me.setSaveWarningStatus(1);
+		me.updateWindowTitle();
 		EventBus.trigger(EVENT.patternChange,currentPattern);
 	};
 	me.clearPattern = function(){
@@ -196,6 +215,7 @@ var Editor = (function(){
 		}
 		StateManager.registerEdit(editAction);
 		me.setSaveWarningStatus(1);
+		me.updateWindowTitle();
 		EventBus.trigger(EVENT.patternChange,currentPattern);
 	};
 	me.clearSong = function(){
@@ -288,6 +308,7 @@ var Editor = (function(){
 			if (!parentEditAction){
 				StateManager.registerEdit(editAction);
 				me.setSaveWarningStatus(1);
+				me.updateWindowTitle();
 			}
 			return true;
 		}else{
@@ -306,6 +327,7 @@ var Editor = (function(){
 			}
 			StateManager.registerEdit(editAction);
 			me.setSaveWarningStatus(1);
+			me.updateWindowTitle();
 			EventBus.trigger(EVENT.patternChange,currentPattern);
 			return true;
 		}else{
@@ -519,6 +541,7 @@ var Editor = (function(){
                     if (success){
                         UI.setStatus("");
                         me.setSaveWarningStatus(0);
+						me.updateWindowTitle();
                     }else{
                         UI.setStatus("Error while saving to Dropbox ...");
                     }
@@ -528,6 +551,7 @@ var Editor = (function(){
                 saveFile(b,fileName);
                 UI.setStatus("");
                 me.setSaveWarningStatus(0);
+				me.updateWindowTitle();
             }
         });
     };

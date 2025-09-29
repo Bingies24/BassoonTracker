@@ -120,7 +120,7 @@ var App = (function(){
                     var build = Host.getBuildNumber();
                     var bassoonVersion = Host.getBassoonVersionNumber();
                     var bassoonBuild = Host.getBassoonBuildNumber();
-                    dialog.setText("*Saxomposer//A JavaScript Amiga MOD and XM tracker/based off of BassoonTracker " + bassoonVersion + "//©2025 Bingies24/©2017-2025 Steffest//Version " + version + "/Build number " + buildNumber);
+                    dialog.setText("*Saxomposer//A JavaScript Amiga MOD and XM tracker/based off of BassoonTracker " + bassoonVersion + "//©2025 Bingies24/©2017-2025 Steffest//Version " + version + "/Build number " + build);
 
                     UI.setModalElement(dialog);
                     break;

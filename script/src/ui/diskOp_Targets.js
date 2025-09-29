@@ -29,28 +29,28 @@ let DiskOperationTargets = function(){
 	me.addChild(label);
 
 	var targetsModule = [
-		{label: "Bassoon:" , target: "bassoon", active:true},
-		{label: "Modarchive:",target: "modarchive"},
+		{label: "Saxomposer:" , target: "bassoon", active:true},
+		{label: "The Mod Archive:",target: "modarchive"},
 		{label: "Modules.pl:",target: "modulespl"},
 		{label: "Dropbox:" , target: "dropbox"},
-		{label: "local:" , target: "local"}
+		{label: "Local:" , target: "local"}
 	];
 
 	var targetsSample = [
-		{label: "Bassoon:" , target: "bassoon", active:true},
+		{label: "Saxomposer:" , target: "bassoon", active:true},
 		{label: "Dropbox:" , target: "dropbox"},
-		{label: "local:" , target: "local"}
+		{label: "Local:" , target: "local"}
 	];
 
 	var targetsPlaylist = [
-		{label: "Bassoon:" , target: "bassoon", active:true},
+		{label: "Saxomposer:" , target: "bassoon", active:true},
 		{label: "HippoPlayer.se:" , target: "hippo"},
 		{label: "Dropbox:" , target: "dropbox"},
-		{label: "local:" , target: "local"}
+		{label: "Local:" , target: "local"}
 	];
 
 	var targetsSave = [
-		{label: "local:" , target: "local", active:true},
+		{label: "Local:" , target: "local", active:true},
         {label: "Dropbox:" , target: "dropbox"}
 	];
 

@@ -77,6 +77,7 @@ let app_mainPanel = function(){
         onChange: function(value){
             Tracker.getSong().title = value;
             UI.setInfo(value);
+            Editor.updateWindowTitle();
         }
     });
     me.addChild(modNameInputBox);
