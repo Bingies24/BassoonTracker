@@ -23,6 +23,17 @@ import Panel from "./ui/components/panel.js";
 
 var App = (function(){
     var me = {};
+
+    var saveWarningActionType = 0;
+    var saveWarningItemURL = "";
+
+	me.setSaveWarningActionType = function(value){
+		saveWarningActionType = value;
+	}
+
+    me.setSaveWarningItemURL = function(value){
+        saveWarningItemURL = value;
+    }
     
     me.buildNumber = (typeof window.buildNumber === "undefined") ? "" : window.buildNumber;
     
@@ -35,8 +46,14 @@ var App = (function(){
             
             switch (command){
                 case COMMAND.newFile:
-                    Tracker.stop();
-                    Tracker.new();
+                    var saveWarningStatus = Editor.getSaveWarningStatus();
+                    if (saveWarningStatus == 0){
+                        Tracker.stop();
+                        Tracker.new();
+                    }else{
+                        me.setSaveWarningActionType(0);
+                        me.doCommand(COMMAND.showSaveWarning);
+                    }
                     break;
                 case COMMAND.openFile:
                     EventBus.trigger(EVENT.showView,"diskop_modules_load");
@@ -209,9 +226,16 @@ var App = (function(){
                         if (elm && elm.name){
                             UI.setStatus("");
                             if (elm.name === "yesbutton"){
-                                Tracker.stop();
-                                dialog.close();
-                                Tracker.new();
+                                if (saveWarningActionType == 0){
+                                    Tracker.stop();
+                                    dialog.close();
+                                    Editor.setSaveWarningStatus(0);
+                                    Tracker.new();
+                                }else if (saveWarningActionType == 1){
+                                    dialog.close();
+                                    Tracker.load(saveWarningItemURL);
+                                    Editor.setSaveWarningStatus(0);
+                                }
                             }else{
                                 dialog.close();
                             }

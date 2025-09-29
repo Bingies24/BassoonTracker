@@ -34,6 +34,8 @@ var Editor = (function(){
 
 	var pasteBuffer = {};
 
+	var saveWarningStatus = 0;
+
 	me.getStepsPerTrack = function(){
 		return Tracker.inFTMode() ? 8 : 6;
 	};
@@ -77,6 +79,13 @@ var Editor = (function(){
 		me.setCurrentCursorPosition(currentTrack*stepsPerTrack + position);
 	};
 
+	me.getSaveWarningStatus = function(){
+		return saveWarningStatus;
+	}
+
+	me.setSaveWarningStatus = function(value){
+		saveWarningStatus = value;
+	}
 
 	me.putNote = function(instrument,period,noteIndex,volume){
 		var note = Tracker.getSong().patterns[currentPattern][currentPatternPos][currentTrack] || new Note();
@@ -102,6 +111,7 @@ var Editor = (function(){
 		
 		editAction.data[0].to = note.duplicate();
 		StateManager.registerEdit(editAction);
+		me.setSaveWarningStatus(1);
 		
 		Tracker.getSong().patterns[currentPattern][currentPatternPos][currentTrack] = note;
 		EventBus.trigger(EVENT.patternChange,currentPattern);
@@ -149,6 +159,7 @@ var Editor = (function(){
 
 		editAction.data[0].to = note.duplicate();
 		StateManager.registerEdit(editAction);
+		me.setSaveWarningStatus(1);
 		
 		Tracker.getSong().patterns[currentPattern][currentPatternPos][currentTrack] = note;
 		EventBus.trigger(EVENT.patternChange,currentPattern);
@@ -167,6 +178,7 @@ var Editor = (function(){
 			}
 		}
 		StateManager.registerEdit(editAction);
+		me.setSaveWarningStatus(1);
 		EventBus.trigger(EVENT.patternChange,currentPattern);
 	};
 	me.clearPattern = function(){
@@ -183,6 +195,7 @@ var Editor = (function(){
 			}
 		}
 		StateManager.registerEdit(editAction);
+		me.setSaveWarningStatus(1);
 		EventBus.trigger(EVENT.patternChange,currentPattern);
 	};
 	me.clearSong = function(){
@@ -274,6 +287,7 @@ var Editor = (function(){
 			if (!hasTracknumber) EventBus.trigger(EVENT.patternChange,currentPattern);
 			if (!parentEditAction){
 				StateManager.registerEdit(editAction);
+				me.setSaveWarningStatus(1);
 			}
 			return true;
 		}else{
@@ -291,6 +305,7 @@ var Editor = (function(){
 				me.pasteTrack(j,data[j],editAction);
 			}
 			StateManager.registerEdit(editAction);
+			me.setSaveWarningStatus(1);
 			EventBus.trigger(EVENT.patternChange,currentPattern);
 			return true;
 		}else{
@@ -503,6 +518,7 @@ var Editor = (function(){
                 Dropbox.putFile("/" + fileName,b,function(success){
                     if (success){
                         UI.setStatus("");
+                        me.setSaveWarningStatus(0);
                     }else{
                         UI.setStatus("Error while saving to Dropbox ...");
                     }
@@ -511,6 +527,7 @@ var Editor = (function(){
                 Logger.info("save " + fileName);
                 saveFile(b,fileName);
                 UI.setStatus("");
+                me.setSaveWarningStatus(0);
             }
         });
     };

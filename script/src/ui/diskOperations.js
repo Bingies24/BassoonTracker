@@ -361,7 +361,15 @@ let DiskOperations = function(){
 							toggleDirectory(item,index);
 						}else{
 							listbox.setSelectedIndex(index);
-							Tracker.load(item.url);
+							var saveWarningStatus = Editor.getSaveWarningStatus();
+							if (saveWarningStatus == 0){
+								Tracker.load(item.url);
+								Editor.setSaveWarningStatus(0);
+							}else{
+								App.setSaveWarningActionType(1);
+								App.setSaveWarningItemURL(item.url);
+								App.doCommand(COMMAND.showSaveWarning);
+							}
 							App.doCommand(COMMAND.showTopMain);
 						}
 					}
@@ -391,8 +399,16 @@ let DiskOperations = function(){
 							toggleDirectory(item,index);
 						}else{
 							listbox.setSelectedIndex(index);
-							Tracker.load(item.url);
-                            App.doCommand(COMMAND.showTopMain);
+							var saveWarningStatus = Editor.getSaveWarningStatus();
+							if (saveWarningStatus == 0){
+								Tracker.load(item.url);
+								Editor.setSaveWarningStatus(0);
+							}else{
+								App.setSaveWarningActionType(1);
+								App.setSaveWarningItemURL(item.url);
+								App.doCommand(COMMAND.showSaveWarning);
+							}
+							App.doCommand(COMMAND.showTopMain);
 						}
 					}
 				};
@@ -447,8 +463,16 @@ let DiskOperations = function(){
 							toggleDirectory(item,index);
 						}else{
 							listbox.setSelectedIndex(index);
-							Tracker.load(item.url);
-                            App.doCommand(COMMAND.showTopMain);
+							var saveWarningStatus = Editor.getSaveWarningStatus();
+							if (saveWarningStatus == 0){
+								Tracker.load(item.url);
+								Editor.setSaveWarningStatus(0);
+							}else{
+								App.setSaveWarningActionType(1);
+								App.setSaveWarningItemURL(item.url);
+								App.doCommand(COMMAND.showSaveWarning);
+							}
+							App.doCommand(COMMAND.showTopMain);
 						}
 					}
 				};
@@ -587,7 +611,15 @@ let DiskOperations = function(){
 							}
 						}else{
 							listbox.setSelectedIndex(index);
-							Tracker.load(item.url);
+							var saveWarningStatus = Editor.getSaveWarningStatus();
+							if (saveWarningStatus == 0){
+								Tracker.load(item.url);
+								Editor.setSaveWarningStatus(0);
+							}else{
+								App.setSaveWarningActionType(1);
+								App.setSaveWarningItemURL(item.url);
+								App.doCommand(COMMAND.showSaveWarning);
+							}
 							//UI.mainPanel.setView("resetTop");
 						}
 
@@ -674,7 +706,15 @@ let DiskOperations = function(){
 			UI.setInfo("");
 			FetchService.json("https://www.stef.be/bassoontracker/api/random" + (format || ""),function(data){
 				if (data && data.modarchive && data.modarchive.module){
-					Tracker.load(data.modarchive.module.url);
+					var saveWarningStatus = Editor.getSaveWarningStatus();
+					if (saveWarningStatus == 0){
+						Tracker.load(data.modarchive.module.url);
+						Editor.setSaveWarningStatus(0);
+					}else{
+						App.setSaveWarningActionType(1);
+						App.setSaveWarningItemURL(data.modarchive.module.url);
+						App.doCommand(COMMAND.showSaveWarning);
+					}
 				}else{
 					console.error("this does not seem to be a valid modArchive API response");
 				}
