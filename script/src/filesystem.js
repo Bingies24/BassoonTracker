@@ -16,6 +16,7 @@ export function loadFile(url,next) {
         var arrayBuffer = req.response;
         if (arrayBuffer && req.status === 200) {
             if (next) next(arrayBuffer);
+            Editor.setSaveWarningStatus(0);
         } else {
             console.error("unable to load", url);
             if (typeof Editor !== "undefined") {

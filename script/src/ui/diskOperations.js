@@ -364,7 +364,6 @@ let DiskOperations = function(){
 							var saveWarningStatus = Editor.getSaveWarningStatus();
 							if (saveWarningStatus == 0){
 								Tracker.load(item.url);
-								Editor.setSaveWarningStatus(0);
 							}else{
 								App.setSaveWarningActionType(1);
 								App.setSaveWarningItemURL(item.url);
@@ -402,7 +401,6 @@ let DiskOperations = function(){
 							var saveWarningStatus = Editor.getSaveWarningStatus();
 							if (saveWarningStatus == 0){
 								Tracker.load(item.url);
-								Editor.setSaveWarningStatus(0);
 							}else{
 								App.setSaveWarningActionType(1);
 								App.setSaveWarningItemURL(item.url);
@@ -466,7 +464,6 @@ let DiskOperations = function(){
 							var saveWarningStatus = Editor.getSaveWarningStatus();
 							if (saveWarningStatus == 0){
 								Tracker.load(item.url);
-								Editor.setSaveWarningStatus(0);
 							}else{
 								App.setSaveWarningActionType(1);
 								App.setSaveWarningItemURL(item.url);
@@ -614,7 +611,6 @@ let DiskOperations = function(){
 							var saveWarningStatus = Editor.getSaveWarningStatus();
 							if (saveWarningStatus == 0){
 								Tracker.load(item.url);
-								Editor.setSaveWarningStatus(0);
 							}else{
 								App.setSaveWarningActionType(1);
 								App.setSaveWarningItemURL(item.url);
@@ -709,7 +705,6 @@ let DiskOperations = function(){
 					var saveWarningStatus = Editor.getSaveWarningStatus();
 					if (saveWarningStatus == 0){
 						Tracker.load(data.modarchive.module.url);
-						Editor.setSaveWarningStatus(0);
 					}else{
 						App.setSaveWarningActionType(1);
 						App.setSaveWarningItemURL(data.modarchive.module.url);

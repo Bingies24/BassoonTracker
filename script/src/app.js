@@ -26,6 +26,7 @@ var App = (function(){
 
     var saveWarningActionType = 0;
     var saveWarningItemURL = "";
+    var saveWarningIndex = 0;
 
 	me.setSaveWarningActionType = function(value){
 		saveWarningActionType = value;
@@ -33,6 +34,10 @@ var App = (function(){
 
     me.setSaveWarningItemURL = function(value){
         saveWarningItemURL = value;
+    }
+
+    me.setSaveWarningIndex = function(value){
+        saveWarningIndex = value;
     }
     
     me.buildNumber = (typeof window.buildNumber === "undefined") ? "" : window.buildNumber;
@@ -229,12 +234,22 @@ var App = (function(){
                                 if (saveWarningActionType == 0){
                                     Tracker.stop();
                                     dialog.close();
-                                    Editor.setSaveWarningStatus(0);
                                     Tracker.new();
+                                    Editor.setSaveWarningStatus(0);
                                 }else if (saveWarningActionType == 1){
                                     dialog.close();
                                     Tracker.load(saveWarningItemURL);
-                                    Editor.setSaveWarningStatus(0);
+                                }else if (saveWarningActionType == 2){
+                                    dialog.close();
+                                    Tracker.load(saveWarningItemURL,true);
+
+                                    if ('URLSearchParams' in window) {
+                                        const url = new URL(window.location);
+                                        url.searchParams.set("index", saveWarningIndex);
+                                        history.pushState(null, '', url);
+                                    }
+
+                                    EventBus.trigger(EVENT.playListIndexChanged,saveWarningIndex);
                                 }
                             }else{
                                 dialog.close();

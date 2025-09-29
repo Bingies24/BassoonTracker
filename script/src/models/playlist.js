@@ -3,6 +3,8 @@ import {COMMAND, EVENT, PLAYLISTTYPE} from "../enum.js";
 import Tracker from "../tracker.js";
 import {saveFile} from "../filesystem.js";
 import Dropbox from "../provider/dropbox.js";
+import App from "../app.js";
+import Editor from "../editor.js";
 
 var Playlist = function(){
     var me = {};
@@ -40,16 +42,24 @@ var Playlist = function(){
                 Tracker.autoPlay = true;
                 playListActive = true;
             }
-            Tracker.load(item.url,true);
-            currentIndex = index;
+            var saveWarningStatus = Editor.getSaveWarningStatus();
+            if (saveWarningStatus == 0){
+                Tracker.load(item.url,true);
+                currentIndex = index;
 
-            if ('URLSearchParams' in window) {
-                const url = new URL(window.location);
-                url.searchParams.set("index", currentIndex);
-                history.pushState(null, '', url);
+                if ('URLSearchParams' in window) {
+                    const url = new URL(window.location);
+                    url.searchParams.set("index", currentIndex);
+                    history.pushState(null, '', url);
+                }
+
+                EventBus.trigger(EVENT.playListIndexChanged,currentIndex);
+            }else{
+                App.setSaveWarningActionType(2);
+                App.setSaveWarningItemURL(item.url);
+                App.setSaveWarningIndex(index);
+                App.doCommand(COMMAND.showSaveWarning);
             }
-
-            EventBus.trigger(EVENT.playListIndexChanged,currentIndex);
         }
     }
 
