@@ -28,3 +28,8 @@ api/config.js
 ./api/config.js
 config.js
 /hosts/FriendOs/build/
+
+# Spark
+LICENSE_spark
+README_spark.md
+spark.exe
