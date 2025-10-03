@@ -16,7 +16,6 @@ import UI from "./ui.js";
 import FetchService from "../fetchService.js";
 import Host from "../host.js";
 import Layout from "./app/layout.js";
-import Dropbox from "../provider/dropbox.js";
 import Playlist from "../models/playlist.js";
 import App from "../app.js";
 import ModArchive from "../provider/modarchive.js";
@@ -511,72 +510,6 @@ let DiskOperations = function(){
 				}
 				break;
 
-			case "dropbox":
-				itemHandler = Dropbox;
-				label.setLabel("Browse Your Dropbox");
-
-				UI.setStatus("Contacting Dropbox",true);
-				listbox.setItems([{label: "loading ..."}]);
-
-				listbox.onClick = function(e){
-					var item = listbox.getItemAtPosition(listbox.eventX,listbox.eventY);
-					if (item && item.data){
-						var index = item.index;
-						item = itemsMap[index];
-
-						if (item.children){
-							toggleDirectory(item,index);
-						}else{
-							listbox.setSelectedIndex(index);
-
-							UI.setInfo(item.title);
-							UI.setStatus("Loading from Dropbox",true);
-
-							Dropbox.getFile(item,function(blob){
-								var reader = new FileReader();
-								reader.onload = function(){
-									Tracker.processFile(reader.result,item.title).then(fileType=>{
-										UI.setStatus("Ready");
-									})
-								};
-								reader.readAsArrayBuffer(blob);
-							});
-
-						}
-					}
-				};
-
-				onLoadChildren = function(item,data){
-					if (data && data.length){
-						data.forEach(function(child){
-							child.parent = item;
-						});
-						item.children = data;
-					}else{
-						item.children = [{title:"error loading data"}];
-						console.error("this does not seem to be a valid dropbox API response");
-					}
-					me.refreshList();
-
-				};
-
-				if (dropBoxList.length){
-					populate(dropBoxList,0);
-				}else{
-					Dropbox.checkConnected().then(isConnected=>{
-						if (isConnected){
-							Dropbox.list("",function(data){
-								UI.setStatus("");
-								dropBoxList = data;
-								populate(data,0);
-							});
-						}else{
-							console.log("Dropbox not connected");
-							Dropbox.showConnectDialog();
-						}
-					});
-				}
-				break;
 			case "samples":
 				itemHandler = false;
 				label.setLabel("Load Sample to slot " + Tracker.getCurrentInstrumentIndex());
@@ -803,14 +736,6 @@ let DiskOperations = function(){
 			browseButton.hide();
 
 			me.onResize();
-
-			if (target === "dropbox"){
-				Dropbox.checkConnected(function(isConnected){
-					if (!isConnected){
-						Dropbox.showConnectDialog();
-					}
-				})
-			}
 
 		}else{
             currentAction = "load";

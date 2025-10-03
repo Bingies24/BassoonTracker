@@ -8,7 +8,6 @@ import StateManager from "./ui/stateManager.js";
 import Note from "./models/note.js";
 import {audioBufferToWav} from "./lib/audioBufferToWav.js";
 import UI from "./ui/ui.js";
-import Dropbox from "./provider/dropbox.js";
 import Logger from "./log.js";
 import Instrument from "./models/instrument.js";
 import ModalDialog from "./ui/components/modalDialog.js";
@@ -535,24 +534,11 @@ var Editor = (function(){
             	return;
 			}
 
-            if (target === "dropbox"){
-                Logger.info("save to dropbox " + fileName);
-                Dropbox.putFile("/" + fileName,b,function(success){
-                    if (success){
-                        UI.setStatus("");
-                        me.setSaveWarningStatus(0);
-						me.updateWindowTitle();
-                    }else{
-                        UI.setStatus("Error while saving to Dropbox ...");
-                    }
-                });
-            }else{
-                Logger.info("save " + fileName);
-                saveFile(b,fileName);
-                UI.setStatus("");
-                me.setSaveWarningStatus(0);
-				me.updateWindowTitle();
-            }
+            Logger.info("save " + fileName);
+            saveFile(b,fileName);
+            UI.setStatus("");
+            me.setSaveWarningStatus(0);
+            me.updateWindowTitle();
         });
     };
 

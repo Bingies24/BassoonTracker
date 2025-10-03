@@ -2,7 +2,6 @@ import EventBus from "../eventBus.js";
 import {COMMAND, EVENT, PLAYLISTTYPE} from "../enum.js";
 import Tracker from "../tracker.js";
 import {saveFile} from "../filesystem.js";
-import Dropbox from "../provider/dropbox.js";
 import App from "../app.js";
 import Editor from "../editor.js";
 
@@ -160,11 +159,7 @@ var Playlist = function(){
         let blob = new Blob([result], {type: "text/plain;charset=utf-8"});
         filename = filename || me.getFileName();
 
-        if (target === "dropbox"){
-            Dropbox.putFile("/" + filename,blob);
-        }else{
-            saveFile(blob,filename);
-        }
+        saveFile(blob,filename);
 
         return result;
     }

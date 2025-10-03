@@ -10,7 +10,6 @@ import Tracker from "../tracker.js";
 import Editor from "../editor.js";
 import BassoonProvider from "../provider/bassoon.js";
 import {encodeRIFFsample} from "../audio/riffWave.js";
-import Dropbox from "../provider/dropbox.js";
 import {BinaryStream} from "../filesystem.js";
 import Playlist from "../models/playlist.js";
 import {saveFile} from "../filesystem.js";
@@ -106,11 +105,7 @@ let DiskOperationSave = function(){
                 var b = new Blob([file.buffer], {type: "application/octet-stream"});
 
 
-				if (saveTarget === "dropbox"){
-					Dropbox.putFile("/" + fileName,b);
-				}else{
-					saveFile(b,fileName);
-				}
+				saveFile(b,fileName);
 
                 console.log("write sample with " + sample.length + " length");
 

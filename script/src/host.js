@@ -13,7 +13,7 @@ var Host = function(){
 	var hostBridge;
 	
 	me.useUrlParams = true;
-	me.useDropbox = true;
+	me.useDropbox = false;
 	me.showInternalMenu = true;
 	me.useWebWorkers = true;
 	me.useInitialLoad = true;
